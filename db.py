@@ -14,10 +14,19 @@ def get_conn():
         password=os.getenv("DB_PASSWORD")
     )
 
+def init_schema(conn):
+    wirh conn.cursor() as cur:
+        with open("schema.sql","r") as f:
+            cur.execute(f.read())
+    conn.commit()
+
 if __name__ == "__main__":
     conn = get_conn()
     cur = conn.cursor()
     cur.execute("SELECT 1")
     print("DB_OK:",cur.fetchone())
+    conn = get_conn()
+    init_schema(conn)
+    print("schema_OK")
     cur.close()
     conn.close()
