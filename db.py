@@ -15,7 +15,7 @@ def get_conn():
     )
 
 def init_schema(conn):
-    wirh conn.cursor() as cur:
+    with conn.cursor() as cur:
         with open("schema.sql","r") as f:
             cur.execute(f.read())
     conn.commit()
