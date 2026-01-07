@@ -4,17 +4,15 @@ from db  import get_conn
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 
-CSV_PATH = BASE_DIR / "users_sample_csv"
+CSV_PATH = BASE_DIR / "users_sample.csv"
 batch_size = 500
 
 SQL = """
 INSERT INTO users (
-    user_id,
     user_name,
     email,
-    create_at
 )
-VALUES (%s,%s,%s,%s)
+VALUES (%s,%s)
 """
 
 def import_users():
@@ -27,10 +25,8 @@ def import_users():
 
                 for row in reader:
                     batch.append((
-                        int(row["user_id"]),
-                        row["user_name"],
+                        row["name"],
                         row["email"],
-                        row["create_at"]
                     ))
 
                     if len(batch) >= batch_size:
