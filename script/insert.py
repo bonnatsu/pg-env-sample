@@ -10,7 +10,7 @@ batch_size = 500
 SQL = """
 INSERT INTO users (
     user_name,
-    email,
+    email
 )
 VALUES (%s,%s)
 """
