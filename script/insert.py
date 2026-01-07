@@ -2,7 +2,7 @@ import csv
 import psycopg2
 from db  import get_conn
 
-CSV_PATH = "users_sample_csv"
+CSV_PATH = "./users_sample_csv"
 batch_size = 500
 
 SQL = """
