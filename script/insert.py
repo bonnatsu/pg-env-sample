@@ -1,8 +1,8 @@
 import csv
 import psycopg2
 from db  import get_conn
-from pathlib import pathlib
-BASE_DIR = PATH(__file__).resolve().parent
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent
 
 CSV_PATH = BASE_DIR / "users_sample_csv"
 batch_size = 500
