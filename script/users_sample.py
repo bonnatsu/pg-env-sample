@@ -12,4 +12,4 @@ with open(output_file,"w",newline="",encoding="utf-8") as f:
         email = f"user{i:05d}@test.com"
         writer.writerow([name,email])
 
-print(f"CSV GENERATED: {ROW_COUNT} rows -> {output_file}")
+print(f"CSV GENERATED: {row_count} rows -> {output_file}")
