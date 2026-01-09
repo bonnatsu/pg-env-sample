@@ -1,4 +1,5 @@
 import csv
+import uuid
 
 row_count = 10000
 output_file = "users_sample.csv"
