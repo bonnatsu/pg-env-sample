@@ -9,7 +9,7 @@ with open(output_file,"w",newline="",encoding="utf-8") as f:
 
     for i in range(1,row_count + 1):
         name = f"user{i:05d}"
-        email = f"user{i:05d}@test.com"
+        email = f"user_{uuid.uuid4()}@test.com"
         writer.writerow([name,email])
 
 print(f"CSV GENERATED: {row_count} rows -> {output_file}")
