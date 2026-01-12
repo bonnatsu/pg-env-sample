@@ -49,7 +49,7 @@ def import_users():
 
 def import_stocks():
     with get_conn() as conn:
-        with conn.cursor as cur:
+        with conn.cursor() as cur:
             batch = []
 
             with open(CSV_STOCKS_PATH,newline="",encoding="utf-8") as f:
