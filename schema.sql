@@ -9,12 +9,12 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS products (
 	id SERIAL PRIMARY KEY,
 	code TEXT NOT NULL,
-	name TEXT UNIQUE NOT NULL,
+	name TEXT UNIQUE NOT NULL
 );
 
 
 
 CREATE TABLE IF NOT EXISTS stocks (
-	product_id int primary key,
+	product_id int primary key
 	quantity int
 );
