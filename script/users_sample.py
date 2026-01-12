@@ -1,5 +1,6 @@
 import csv
 import uuid
+import random
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -15,4 +16,16 @@ with open(output_file,"w",newline="",encoding="utf-8") as f:
         email = f"user_{uuid.uuid4()}@test.com"
         writer.writerow([name,email])
 
-print(f"CSV GENERATED: {row_count} rows -> {output_file}")
+output_file = BASE_DIR / "stocks.csv"
+row_count = 5000
+with open(output_file,"w",newline="",encoding="utf-8") as f:
+    writer = csv.writer(f)
+    writer.writerow([product_id,quantity])
+
+    for i in range(1,row_count + 1):
+        product_id = i
+        quantity = random.randint(0,10000)
+        writer.writerow([product_id,quantity])
+
+
+print(f"CSV GENERATED: CREATE OK!")
