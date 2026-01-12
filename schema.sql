@@ -15,6 +15,6 @@ CREATE TABLE IF NOT EXISTS products (
 
 
 CREATE TABLE IF NOT EXISTS stocks (
-	product_id int primary key
+	product_id int primary key,
 	quantity int
 );
