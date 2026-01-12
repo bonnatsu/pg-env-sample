@@ -20,7 +20,7 @@ output_file = BASE_DIR / "stocks.csv"
 row_count = 5000
 with open(output_file,"w",newline="",encoding="utf-8") as f:
     writer = csv.writer(f)
-    writer.writerow([product_id,quantity])
+    writer.writerow(["product_id","quantity"])
 
     for i in range(1,row_count + 1):
         product_id = i
