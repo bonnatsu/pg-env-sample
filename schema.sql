@@ -4,3 +4,17 @@ CREATE TABLE IF NOT EXISTS users (
 	email TEXT UNIQUE NOT NULL,
 	create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE IF NOT EXISTS products (
+	id SERIAL PRIMARY KEY,
+	code TEXT NOT NULL,
+	name TEXT UNIQUE NOT NULL,
+);
+
+
+
+CREATE TABLE IF NOT EXISTS stocks (
+	product_id int primary key,
+	quantity int
+);
