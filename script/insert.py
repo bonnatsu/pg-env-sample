@@ -6,7 +6,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 
 CSV_PATH = BASE_DIR / "users_sample.csv"
-CSV_STOCKS_PATH = BASE_DIR / "users_sample.csv"
+CSV_STOCKS_PATH = BASE_DIR / "stocks.csv.csv"
 batch_size = 500
 
 SQL = """
