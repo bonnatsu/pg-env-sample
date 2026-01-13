@@ -22,7 +22,7 @@ def stock_in(req: StockInRequest):
             "SELECT 1 FROM products WHERE id = %s",
             (req.id,)
         )
-        if cur.fetchone() is none:
+        if cur.fetchone() is None:
             raise HTTPException(status_code=404, detail="producta not found")
         
         cur.execute(
