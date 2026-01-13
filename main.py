@@ -23,10 +23,10 @@ def stock_in(req: StockInRequest):
             (req.id,)
         )
         if cur.fetchone() is None:
-            raise HTTPException(status_code=404, detail="producta not found")
+            raise HTTPException(status_code=404, detail="product not found")
         
         cur.execute(
-            "SELECT quantity FROM stocks WHERE id = %s FOR UPDATE",
+            "SELECT quantity FROM stocks WHERE product_id = %s FOR UPDATE",
             (req.id,)
         )
         row = cur.fetchone()
@@ -34,13 +34,13 @@ def stock_in(req: StockInRequest):
         if row is None:
             #在庫なければ作る
             cur.execute(
-                "INSERT INTO stocks (id,quantity) VALUES (%s,%s)",
+                "INSERT INTO stocks (product_id,quantity) VALUES (%s,%s)",
                 (req.id,req.quantity)
             )
             new_qty = req.quantity
         else:
             cur.execute(
-                "UPDATE stocks SET quantity = quantity + %s WHERE id = %s",
+                "UPDATE stocks SET quantity = quantity + %s WHERE product_id = %s",
                 (req.quantity,req.id)
             )
             new_qty = row[0] + req + req.quantity
