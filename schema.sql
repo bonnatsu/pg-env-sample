@@ -8,13 +8,46 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS products (
 	id SERIAL PRIMARY KEY,
-	code TEXT NOT NULL,
-	name TEXT UNIQUE NOT NULL
+	product_code VARCHAR(50) UNIQUE NOT NULL,
+	product_name VARCHAR(100) NOT NULL,
+	unit         VARCHAR(10),
+	created_at   TIMESTAMP DEFAULT now()
 );
 
 
 
 CREATE TABLE IF NOT EXISTS stocks (
-	product_id int primary key,
-	quantity int
+	stock_id        SERIAL PRIMARY KEY,
+	product_id      INT NOT NULL REFERENCES products(product_id),
+	quantity        INT NOT NULL DEFAULT 0,
+
+	-- 将来拡張用
+	location_id     INT,
+	lot_no          VARCHAR(50),
+	expiration_date DATE,
+	received_at     TIMESTAMP,
+
+	created_at      TIMESTAMP DEFAULT now(),
+	updated_at      TIMESTAMP DEFAULT now(),
+
+	UNIQUE (product_id, location_id, lot_no, expiration_date)
+);
+
+
+CREATE TABLE IF NOT EXISTS locations (
+	location_id SERIAL primary key,
+	location_code VARCHAR(50) UNIQUE NOT NULL,
+	location_name VARCHAR(100),
+	create_at TIMESTAMP DEFAULT now()
+);
+
+
+CREATE TABLE IF NOT EXISTS stock_transactions (
+	transaction_id SERIAL PRIMARY KEY,
+	stock_id        INTEGER NOT NULL REFERENCES stocks(stock_id),
+	txn_type        VARCHAR(10) NOT NULL CHECK (txn_type IN ('IN','OUT','ADJUST')),
+	qty             INTEGER NOT NULL,
+	reason          VARCHAR(20),
+	ref_no          VARCHAR(50),
+	created_at      TIMESTAMP DEFAULT now()
 );
