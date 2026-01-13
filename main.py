@@ -43,7 +43,7 @@ def stock_in(req: StockInRequest):
                 "UPDATE stocks SET quantity = quantity + %s WHERE product_id = %s",
                 (req.quantity,req.id)
             )
-            new_qty = row[0] + req + req.quantity
+            new_qty = row[0] + req.quantity
         
         conn.commit()
 
