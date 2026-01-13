@@ -15,10 +15,16 @@ CREATE TABLE IF NOT EXISTS products (
 );
 
 
+CREATE TABLE IF NOT EXISTS locations (
+	location_id SERIAL primary key,
+	location_code VARCHAR(50) UNIQUE NOT NULL,
+	location_name VARCHAR(100),
+	create_at TIMESTAMP DEFAULT now()
+);
 
 CREATE TABLE IF NOT EXISTS stocks (
 	stock_id        SERIAL PRIMARY KEY,
-	product_id      INT NOT NULL REFERENCES products(product_id),
+	product_id      INT NOT NULL REFERENCES products(id),
 	quantity        INT NOT NULL DEFAULT 0,
 
 	-- 将来拡張用
@@ -31,14 +37,6 @@ CREATE TABLE IF NOT EXISTS stocks (
 	updated_at      TIMESTAMP DEFAULT now(),
 
 	UNIQUE (product_id, location_id, lot_no, expiration_date)
-);
-
-
-CREATE TABLE IF NOT EXISTS locations (
-	location_id SERIAL primary key,
-	location_code VARCHAR(50) UNIQUE NOT NULL,
-	location_name VARCHAR(100),
-	create_at TIMESTAMP DEFAULT now()
 );
 
 
