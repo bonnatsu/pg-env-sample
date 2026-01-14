@@ -1,6 +1,9 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from db import get_conn
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 class StockInRequest(BaseModel):
@@ -61,3 +64,12 @@ def stock_in(req: StockInRequest):
     finally:
         cur.close()
         conn.close()
+
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/stock/in-page", response_class=HTMLResponse)
+def stock_in_page(request: Request):
+    return templates.TemplateResponse(
+        "stock_in.html",
+        {"request": request}
+    )
