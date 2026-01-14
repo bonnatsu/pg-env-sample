@@ -22,11 +22,13 @@ def stock_in(req: StockInRequest):
 
     try:
         cur.execute(
-            "SELECT 1 FROM products WHERE id = %s",
+            "SELECT product_name FROM products WHERE id = %s",
             (req.id,)
         )
         if cur.fetchone() is None:
             raise HTTPException(status_code=404, detail="product not found")
+        
+        product_name = row[0]
         
         cur.execute(
             "SELECT quantity FROM stocks WHERE product_id = %s FOR UPDATE",
@@ -52,7 +54,9 @@ def stock_in(req: StockInRequest):
 
         return {
             "id": req.id,
-            "quantity": req.quantity
+            "product_name":product_name,
+            "quantity": req.quantity,
+            "message": f"商品名:{product_name} 入庫完了"
         }
     
     except HTTPException:
