@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>出庫</title>
+    </head>
+    <body>
+        <h2>出庫画面</h2>
+
+        <input id="id" placeholder="商品id">
+        <input id="quantity" placeholder="数量">
+
+        <button onclick="Stock_Out()">出庫</button>
+
+        <pre id="result"></pre>
+
+        <script>
+            function Stock_Out() {
+                fetch("/stock/out", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id: Number(document.getElementById("id").value),
+                        quantity: Number(document.getElementById("quantity").value)
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("result").textContent =
+                        data.message + " 現在庫: " + data.current_quantity;
+                });
+            }
+        </script>
+    </body>
+</html>
