@@ -118,7 +118,7 @@ def stock_out(req: StockInRequest):
             new_qty = req.quantity
         else:
             cur.execute(
-                "UPDATE stocks SET quantity = quantity - %s WHERE product_id = %s",
+                "UPDATE stocks SET quantity = quantity - %s,update_at = now() WHERE product_id = %s",
                 (req.quantity,req.id)
             )
             new_qty = row[0] + req.quantity
