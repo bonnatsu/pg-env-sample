@@ -26,7 +26,7 @@ def stock_in(req: StockInRequest):
             (req.id,)
         )
         row = cur.fetchone()
-        if cur.row is None:
+        if row is None:
             raise HTTPException(status_code=404, detail="product not found")
         
         product_name = row[0]
@@ -57,6 +57,7 @@ def stock_in(req: StockInRequest):
             "id": req.id,
             "product_name":product_name,
             "quantity": req.quantity,
+            "current_quantity": new_qty,
             "message": f"商品名:{product_name} 入庫完了"
         }
     

@@ -29,7 +29,7 @@
                 .then(res => res.json())
                 .then(data => {
                     document.getElementById("result").textContent =
-                        data.message + " 現在庫: " + data.quantity;
+                        data.message + " 現在庫: " + data.current_quantity;
                 });
             }
         </script>
