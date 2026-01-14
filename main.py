@@ -25,7 +25,8 @@ def stock_in(req: StockInRequest):
             "SELECT product_name FROM products WHERE id = %s",
             (req.id,)
         )
-        if cur.fetchone() is None:
+        row = cur.fetchone()
+        if cur.row is None:
             raise HTTPException(status_code=404, detail="product not found")
         
         product_name = row[0]
