@@ -156,3 +156,44 @@ def main_page(request: Request):
         "index.html",
         {"request": request}
     )
+
+
+@app.get("/stock/list")
+def stock_list():
+    conn = get_conn()
+    cur = conn.cursor()
+
+    try:
+        cur.execute("""
+            SELECT
+                p.product_id,
+                p.product_name,
+                COALESCE(s.quantity, 0) AS quantity
+            FROM products p
+            LEFT JOIN stocks s
+              ON p.product_id = s.product_id
+            ORDER BY p.product_id
+        """)
+
+        rows = cur.fetchall()
+
+        result = []
+        for r in rows:
+            result.append({
+                "product_id": r[0],
+                "product_name": r[1],
+                "quantity": r[2]
+            })
+
+        return result
+
+    finally:
+        cur.close()
+        conn.close()
+
+@app.get("/stock/list-page", response_class=HTMLResponse)
+def stock_list_page(request: Request):
+    return templates.TemplateResponse(
+        "stock_list.html",
+        {"request": request}
+    )
