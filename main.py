@@ -149,3 +149,10 @@ def stock_out_page(request: Request):
         "stock_out.html",
         {"request": request}
     )
+
+@app.get("/", response_class=HTMLResponse)
+def main_page(request: Request):
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request}
+    )
