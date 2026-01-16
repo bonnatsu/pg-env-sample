@@ -193,3 +193,11 @@ def stock_list():
         cur.close()
         conn.close()
 
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/stock/list-page", response_class=HTMLResponse)
+def stock_list_page(request: Request):
+    return templates.TemplateResponse(
+        "stock_list.html",
+        {"request": request}
+    )
