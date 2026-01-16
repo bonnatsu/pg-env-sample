@@ -165,15 +165,15 @@ def stock_list():
 
     try:
         cur.execute("""
-            SELECT
-                p.product_id,
-                p.product_name,
-                COALESCE(s.quantity, 0) AS quantity
-            FROM products p
-            LEFT JOIN stocks s
-              ON p.product_id = s.product_id
-            ORDER BY p.product_id
-        """)
+        SELECT
+            p.id AS product_id,
+            p.product_name,
+            COALESCE(s.quantity, 0) AS quantity
+        FROM products p
+        LEFT JOIN stocks s
+            ON p.id = s.product_id
+            ORDER BY p.id
+    """)
 
         rows = cur.fetchall()
 
