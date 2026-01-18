@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>商品マスタ追加</title>
+    </head>
+
+<body>
+    <h2>商品マスタ追加</h2>
+
+    <input id="product_code" placeholder="商品コード">
+    <input id="product_name" placeholder="商品名">
+    <input id="unit" placeholder="単位">
+
+    <button onclick="addProduct()">追加</button>
+
+    <pre id="result"></pre>
+
+    <script>
+        function addProduct() {
+            fetch("/product/add", {
+                method: "POST",
+                headers: {"Content-Type":"application/json"},
+
+                body: JSON.stringify({
+                    product_code: document.getElementById("code").value,
+                    product_name: document.getElementById("name").value,
+                    unit: document.getElementById("unit").value
+                })
+
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("result").textContent = data.message + " id" + data.id;
+            });
+
+        }
+    </script>
+
+    <button onclick="location.href='/'">メインメニューへ</button>
+</body>
+</html>

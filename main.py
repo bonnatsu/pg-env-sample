@@ -196,3 +196,38 @@ def stock_list_page(request: Request):
         "stock_list.html",
         {"request": request}
     )
+
+
+class productCreateRequest(BaseModel):
+    product_code: str
+    product_name: str
+    Unit: str | None = None
+
+@app.post("product/add")
+def add_product(req: productCreateRequest):
+    conn = get_conn()
+    cur = conn.cursor()
+
+    try:
+        cur.execute(
+            """
+            INSERT INTO products (product_code, product_name, unit)
+            VALUES (%s,%s,%s)
+            RETURNING id
+            """,
+            (req.product_code, req.product_name, req.unit)
+        )
+        new_id =cur.fetchone()[0]
+        conn.commit()
+
+        return {
+            "id": new_id,
+            "message": "商品マスタ登録完了"
+        }
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=500,detail=str(e))
+    
+    finally:
+        cur.close()
+        conn.close()
