@@ -198,13 +198,13 @@ def stock_list_page(request: Request):
     )
 
 
-class productCreateRequest(BaseModel):
+class ProductCreateRequest(BaseModel):
     product_code: str
     product_name: str
     unit: str | None = None
 
 @app.post("/product/add")
-def add_product(req: productCreateRequest):
+def add_product(req: ProductCreateRequest):
     conn = get_conn()
     cur = conn.cursor()
 
