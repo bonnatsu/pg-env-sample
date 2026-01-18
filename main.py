@@ -207,7 +207,9 @@ class ProductCreateRequest(BaseModel):
 def add_product(req: ProductCreateRequest):
     conn = get_conn()
     cur = conn.cursor()
-
+    cur.execute("SELECT 1 FROM products WHERE product_code = %s", (req.product_code,))
+    if cur.fetchone():
+        raise HTTPException(status_code=400, detail="商品コードが重複しています")
     try:
         cur.execute(
             """
@@ -226,7 +228,7 @@ def add_product(req: ProductCreateRequest):
         }
     except Exception as e:
         conn.rollback()
-        raise HTTPException(status_code=500,detail=str(e))
+        raise HTTPException(status_code=400, detail="商品コードが重複しています")
     
     finally:
         cur.close()
