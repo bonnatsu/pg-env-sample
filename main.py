@@ -110,12 +110,7 @@ def stock_out(req: StockInRequest):
         row = cur.fetchone()
 
         if row is None:
-            #在庫なければ作る
-            cur.execute(
-                "INSERT INTO stocks (product_id,quantity) VALUES (%s,%s)",
-                (req.id,req.quantity)
-            )
-            new_qty = req.quantity
+            raise HTTPException(status_code=400, detail="stock not found")
         else:
             cur.execute(
                 "UPDATE stocks SET quantity = quantity - %s,updated_at = now() WHERE product_id = %s",
