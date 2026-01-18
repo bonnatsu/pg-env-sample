@@ -231,3 +231,10 @@ def add_product(req: productCreateRequest):
     finally:
         cur.close()
         conn.close()
+
+@app.get("/product/add_master", response_class=HTMLResponse)
+def stock_list_page(request: Request):
+    return templates.TemplateResponse(
+        "product_add.html",
+        {"request": request}
+    )
