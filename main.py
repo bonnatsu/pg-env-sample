@@ -121,7 +121,7 @@ def stock_out(req: StockInRequest):
                 "UPDATE stocks SET quantity = quantity - %s,updated_at = now() WHERE product_id = %s",
                 (req.quantity,req.id)
             )
-            new_qty = row[0] + req.quantity
+            new_qty = row[0] - req.quantity
         
         conn.commit()
 
