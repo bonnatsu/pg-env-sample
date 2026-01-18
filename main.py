@@ -201,9 +201,9 @@ def stock_list_page(request: Request):
 class productCreateRequest(BaseModel):
     product_code: str
     product_name: str
-    Unit: str | None = None
+    unit: str | None = None
 
-@app.post("product/add")
+@app.post("/product/add")
 def add_product(req: productCreateRequest):
     conn = get_conn()
     cur = conn.cursor()
@@ -233,7 +233,7 @@ def add_product(req: productCreateRequest):
         conn.close()
 
 @app.get("/product/add_master", response_class=HTMLResponse)
-def stock_list_page(request: Request):
+def master_add_page(request: Request):
     return templates.TemplateResponse(
         "product_add.html",
         {"request": request}
