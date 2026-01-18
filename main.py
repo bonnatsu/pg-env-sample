@@ -226,9 +226,13 @@ def add_product(req: ProductCreateRequest):
             "id": new_id,
             "message": "商品マスタ登録完了"
         }
-    except Exception as e:
+    except psycopg2.errors.UniqueViolation:
         conn.rollback()
         raise HTTPException(status_code=400, detail="商品コードが重複しています")
+
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
     
     finally:
         cur.close()
