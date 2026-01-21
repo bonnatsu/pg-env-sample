@@ -19,18 +19,26 @@
         function addProduct() {
             fetch("/product/add", {
                 method: "POST",
-                headers: {"Content-Type":"application/json"},
-
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    product_code: document.getElementById("product_code").value,
-                    product_name: document.getElementById("product_name").value,
-                    unit: document.getElementById("unit").value
+                product_code: document.getElementById("product_code").value,
+                product_name: document.getElementById("product_name").value,
+                unit: document.getElementById("unit").value
                 })
             })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById("result").textContent = data.message + " id:" + data.id;
-            });
+            .then(async res => {
+                const data = await res.json();
+                if (!res.ok) throw data;
+                return data;
+        })
+        .then(data => {
+            document.getElementById("result").textContent =
+                data.message + " id:" + data.id;
+        })
+        .catch(err => {
+            document.getElementById("result").textContent =
+                err.detail || "エラーが発生しました";
+        });
         }
     </script>
 
