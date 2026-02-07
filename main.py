@@ -111,12 +111,20 @@ def stock_out(req: StockInRequest):
 
         if row is None:
             raise HTTPException(status_code=400, detail="stock not found")
-        else:
-            cur.execute(
-                "UPDATE stocks SET quantity = quantity - %s,updated_at = now() WHERE product_id = %s",
-                (req.quantity,req.id)
-            )
-            new_qty = row[0] - req.quantity
+        
+        current_qty=row[0]
+        
+        if current_qty < req.quantity:
+            raise HTTPException(
+            status_code=400,
+            detail=f"在庫不足（現在庫： : {current_qty}）"
+        )
+
+        cur.execute(
+            "UPDATE stocks SET quantity = quantity - %s,updated_at = now() WHERE product_id = %s",
+            (req.quantity,req.id)
+        )
+        new_qty = row[0] - req.quantity
         
         conn.commit()
 
