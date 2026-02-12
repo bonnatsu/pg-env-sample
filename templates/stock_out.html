@@ -28,8 +28,19 @@
                 })
                 .then(res => res.json())
                 .then(data => {
+                    if (!res.ok) {
+                        return res.json().then(err => {
+                            throw new Error(err.detail);
+                        });
+                    }
+                    return res.json();
+                })
+                .then(data => {
                     document.getElementById("result").textContent =
                         data.message + " 現在庫: " + data.current_quantity;
+                })
+                .catch(error => {
+                    document.getElementById("result").textContent = error.message;
                 });
             }
         </script>

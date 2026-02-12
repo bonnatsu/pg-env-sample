@@ -116,8 +116,8 @@ def stock_out(req: StockInRequest):
         
         if current_qty < req.quantity:
             raise HTTPException(
-            status_code=400,
-            detail=f"在庫不足（現在庫： : {current_qty}）"
+            status_code=409,
+            detail=f"在庫不足（現在庫：{current_qty}）"
         )
 
         cur.execute(
