@@ -49,3 +49,15 @@ CREATE TABLE IF NOT EXISTS stock_transactions (
 	ref_no          VARCHAR(50),
 	created_at      TIMESTAMP DEFAULT now()
 );
+
+
+CREATE TABLE IF NOT EXISTS stock_movements (
+	id SERIAL PRIMARY KEY,
+	product_id INT NOT NULL,
+	movement_type VARCHAR(20) NOT NULL, -- IN/OUT
+	quantity INT NOT NULL,
+	before_qty INT NOT NULL,
+	after_qty INT NOT NULL,
+	reason VARCHAR(50), --入出庫理由
+	create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
